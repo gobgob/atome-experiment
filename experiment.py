@@ -17,19 +17,6 @@ PORT = 8766
 
 DURATION = 60
 
-def wait_for_the_start(socket):
-    message = ""
-    while True:
-        c = hl_socket.recv(1).decode("ascii")
-        if c == '\n':
-            if message == "START":
-                return
-            message = ""
-        else:
-            message += str(c)
-        time.sleep(0.1)
-
-
 if __name__ == '__main__':
     logger = logging.basicConfig(stream=sys.stdout)
     logger = logging.getLogger(__name__)
@@ -45,15 +32,11 @@ if __name__ == '__main__':
     pi.write(MOTOR_DIR, 0)
 
     hl_socket = None
-    ready = False
     while True:
         try:
             logger.info("Connecting to the robot (%s, %s)..." % (HOST, PORT))
             hl_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             hl_socket.connect((HOST, PORT))
-            # hl_socket.send("ASK_STATUS\n".encode("ascii"))
-            logger.info("Waiting for robot's orders...")
-            wait_for_the_start(hl_socket)
             break
         except Exception as e:
             print(e)
