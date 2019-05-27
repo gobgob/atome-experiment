@@ -12,10 +12,10 @@ MOTOR_DIR = 24
 
 MOTOR_SPEED = 200
 
-HOST = "192.168.1.69"
+HOST = "192.168.43.7"
 PORT = 8766
 
-DURATION = 60
+DURATION = 10
 
 if __name__ == '__main__':
     logger = logging.basicConfig(stream=sys.stdout)
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     pi.set_mode(MOTOR_BRAKE, pigpio.OUTPUT)
     pi.set_mode(MOTOR_DIR, pigpio.OUTPUT)
     pi.write(MOTOR_BRAKE, 0)
-    pi.write(MOTOR_DIR, 0)
+    pi.write(MOTOR_DIR, 1)
     pi.set_PWM_dutycycle(MOTOR_PWM, 0)
 
 
