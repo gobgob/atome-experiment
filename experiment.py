@@ -7,8 +7,8 @@ import time
 import sys
 
 MOTOR_PWM = 18
-MOTOR_BRAKE = 23
-MOTOR_DIR = 24
+MOTOR_IN0 = 23
+MOTOR_IN1 = 24
 
 MOTOR_SPEED = 200
 
@@ -26,10 +26,10 @@ if __name__ == '__main__':
 
     pi = pigpio.pi()
     pi.set_mode(MOTOR_PWM, pigpio.OUTPUT)
-    pi.set_mode(MOTOR_BRAKE, pigpio.OUTPUT)
-    pi.set_mode(MOTOR_DIR, pigpio.OUTPUT)
-    pi.write(MOTOR_BRAKE, 0)
-    pi.write(MOTOR_DIR, 1)
+    pi.set_mode(MOTOR_IN0, pigpio.OUTPUT)
+    pi.set_mode(MOTOR_IN1, pigpio.OUTPUT)
+    pi.write(MOTOR_IN0, 0)
+    pi.write(MOTOR_IN1, 1)
     pi.set_PWM_dutycycle(MOTOR_PWM, 0)
 
 
