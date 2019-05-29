@@ -6,7 +6,7 @@ import socket
 import time
 import sys
 
-MOTOR_PWM = 18
+MOTOR_PWM = 17
 MOTOR_BRAKE = 23
 MOTOR_DIR = 24
 
