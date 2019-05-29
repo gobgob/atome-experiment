@@ -29,7 +29,9 @@ if __name__ == '__main__':
     pi.set_mode(MOTOR_BRAKE, pigpio.OUTPUT)
     pi.set_mode(MOTOR_DIR, pigpio.OUTPUT)
     pi.write(MOTOR_BRAKE, 0)
-    pi.write(MOTOR_DIR, 0)
+    pi.write(MOTOR_DIR, 1)
+    pi.set_PWM_dutycycle(MOTOR_PWM, 0)
+
 
     hl_socket = None
     while True:
