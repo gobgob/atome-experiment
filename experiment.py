@@ -62,5 +62,3 @@ if __name__ == '__main__':
     pi.set_PWM_dutycycle(MOTOR_PWM, 0)
     pi.stop()
 
-    while True:
-        pass
