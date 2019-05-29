@@ -1,0 +1,10 @@
+[Unit]
+Description=GobGob experiment service
+Requires=pigpiod.service
+
+[Service]
+ExecStart=/home/pi/atome-experiment/match.sh
+
+[Install]
+WantedBy=multi-user.target
+
