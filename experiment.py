@@ -37,6 +37,11 @@ if __name__ == '__main__':
     thread_light.start()
     thread_light.set_state(light.STATE_WAITING_WIFI)
 
+    while os.system("ping -c 1 " + HOST) != 0:
+        pass
+
+    thread_light.set_state(light.STATE_WIFI_OK)
+
     hl_socket = None
     while True:
         try:

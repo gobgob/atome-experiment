@@ -23,8 +23,9 @@ LED_CHANNEL    = 0       # set to '1' for GPIOs 13, 19, 41, 45 or 53
 
 STATE_NONE = 0
 STATE_WAITING_WIFI = 1
-STATE_RUNNING = 2
-STATE_STOP = 3
+STATE_WIFI_OK = 2
+STATE_RUNNING = 3
+STATE_STOP = 5
 
 
 class MyThread(Thread):
@@ -32,6 +33,7 @@ class MyThread(Thread):
     def __init__(self):
         Thread.__init__(self)
         self.state = STATE_NONE
+        self.step = 0;
 
     def run(self):
         print("{} started!".format(self.getName()))              # "Thread-x started!"
@@ -40,25 +42,56 @@ class MyThread(Thread):
         # Intialize the library (must be called once before other functions).
         strip.begin()
         while True:
+            self.step += 1
             if self.state == STATE_WAITING_WIFI:
-                for i in range(strip.numPixels()):
-                    strip.setPixelColor(i, Color(255, 0, 0))
-                    strip.show()
-                print("wifi")
-            elif self.state == STATE_RUNNING:
                 for i in range(strip.numPixels()):
                     strip.setPixelColor(i, Color(0, 255, 0))
                     strip.show()
-                print("running")
+                # print("wait wifi")
+            if self.state == STATE_WIFI_OK:
+                for i in range(strip.numPixels()):
+                    strip.setPixelColor(i, Color(255, 0, 0))
+                    strip.show()
+                # print("wifi ok")
+            elif self.state == STATE_RUNNING:
+                anim(strip, self.step)
+                # print("running")
             elif self.state == STATE_NONE:
-                print("none")
+                # print("none")
+                pass
             elif self.state == STATE_STOP:
-                return
-            time.sleep(0.5)                                      # Pretend to work for a second
+                anim_final(strip, self.step)
+            time.sleep(0.01)                                      # Pretend to work for a second
 
 
     def set_state(self, new_state):
         self.state = new_state
+
+
+def anim(strip, step):
+    for i in range(strip.numPixels()):
+        if((i+step)%20<10):
+            strip.setPixelColor(i, Color(25, 102, 0))
+        else:
+            strip.setPixelColor(i, Color(0, 0, 0))
+    strip.show()
+
+
+def anim_final(strip, step):
+    for i in range(strip.numPixels()):
+        strip.setPixelColor(i, wheel((i+step*10) % 255))
+    strip.show()
+
+
+
+
+
+
+
+
+
+
+
 
 
 # Define functions which animate LEDs in various ways.
