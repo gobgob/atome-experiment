@@ -5,6 +5,7 @@ import pigpio
 import socket
 import time
 import sys
+import light
 
 MOTOR_PWM = 17
 MOTOR_BRAKE = 23
@@ -32,6 +33,9 @@ if __name__ == '__main__':
     pi.write(MOTOR_DIR, 1)
     pi.set_PWM_dutycycle(MOTOR_PWM, 0)
 
+    thread_light = light.MyThread()
+    thread_light.start()
+    thread_light.set_state(light.STATE_WAITING_WIFI)
 
     hl_socket = None
     while True:
@@ -50,6 +54,8 @@ if __name__ == '__main__':
 
     pi.set_PWM_dutycycle(MOTOR_PWM, MOTOR_SPEED)
 
+    thread_light.set_state(light.STATE_RUNNING)
+
     counter = DURATION
 
     while counter > 0:
@@ -61,4 +67,4 @@ if __name__ == '__main__':
 
     pi.set_PWM_dutycycle(MOTOR_PWM, 0)
     pi.stop()
-
+    thread_light.set_state(light.STATE_STOP)
