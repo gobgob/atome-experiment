@@ -6,6 +6,7 @@ import socket
 import time
 import sys
 import light
+import os
 
 MOTOR_PWM = 17
 MOTOR_BRAKE = 23
